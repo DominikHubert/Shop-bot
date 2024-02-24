@@ -10,13 +10,13 @@ from keyboards.inline.products_from_catalog import product_markup, product_cb
 from aiogram.utils.callback_data import CallbackData
 from aiogram.types.chat import ChatActions
 from loader import dp, db, bot
-from .menu import catalog
 from filters import IsUser
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 @dp.message_handler(IsUser(), text=delivery_status)
 async def process_delivery_status(message: Message):
     
+    await message.answer('Alle Produkte:')
     await show_products(message)
 
 async def show_products(m):
@@ -28,4 +28,5 @@ async def show_products(m):
         await bot.send_chat_action(m.chat.id, ChatActions.TYPING)
         for idx, title, body, price in products:
             markup = InlineKeyboardMarkup().add(InlineKeyboardButton("Mehr Details", callback_data=f"detail_{idx}"))
-            await m.answer(text=f'<b>{title}</b>\n\nPreis: {price}€', reply_markup=markup)
+            #await m.answer(text=f'<b>{title}</b>\n\nPreis: {price}€', reply_markup=markup)
+            await m.answer(text=f'<b>{title}</b>\n', reply_markup=markup)

@@ -11,7 +11,7 @@ filters.setup(dp)
 
 WEBAPP_HOST = "0.0.0.0"
 WEBAPP_PORT = int(os.environ.get("PORT", 5000))
-user_message = 'Benutzer'  # Übersetzt von 'Пользователь'
+user_message = 'Starten'  # Übersetzt von 'Пользователь'
 admin_message = 'Admin'  # Übersetzt von 'Админ'
 catalog = '🛍️ Katalog'
 delivery_status = '🚚 Alle Produkte'
@@ -19,7 +19,7 @@ delivery_status = '🚚 Alle Produkte'
 
 @dp.message_handler(commands='start')
 async def cmd_start(message: types.Message):
-
+    user_first_name = message.chat.first_name  # Nutzernamen aus der Nachricht extrahieren
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
 
     #markup.row(user_message, admin_message)
@@ -27,17 +27,9 @@ async def cmd_start(message: types.Message):
     if message.chat.id == 409300245:
         markup.row(admin_message)
 
-    await message.answer('''Hallo! 👋
-
-🤖 Ich bin ein Shop-Bot für den Verkauf von Produkten jeder Kategorie.
-    
-🛍️ Um zum Katalog zu gelangen und die gewünschten Produkte auszuwählen, verwenden Sie den Befehl /menu.
-
-💰 Das Konto kann über Yandex.Kasse, Sberbank oder Qiwi aufgeladen werden.
-
-❓ Fragen? Kein Problem! Das Kommando /sos hilft, sich mit den Administratoren in Verbindung zu setzen, die versuchen werden, so schnell wie möglich zu antworten.
-
-🤝 Einen ähnlichen Bot bestellen? Kontaktieren Sie den Entwickler <a href="https://t.me/NikolaySimakov">Nikolay Simakov</a>, er beißt nicht)))''', reply_markup=markup)
+    # Füge den Namen des Nutzers zur Begrüßungsnachricht hinzu
+    welcome_message = f'Hallo {user_first_name}, willkommen in der Gamechanger Nation Kunden Zinzino Gruppe!'
+    await message.answer(welcome_message, reply_markup=markup)
 
 
 @dp.message_handler(text=user_message)
@@ -47,14 +39,14 @@ async def user_mode(message: types.Message):
     if cid in config.ADMINS:
         config.ADMINS.remove(cid)
 
-    await message.answer('Benutzermodus aktiviert.', reply_markup=ReplyKeyboardRemove())
+    #await message.answer('Wähle aus dem Menü.', reply_markup=ReplyKeyboardRemove())
     
     markup = ReplyKeyboardMarkup(selective=True)
     markup.add(catalog)
         #markup.add(balance, cart)
     markup.add(delivery_status)
 
-    await message.answer('Menü', reply_markup=markup)
+    await message.answer('Wähle aus dem Menü.', reply_markup=markup)
 
 
 """

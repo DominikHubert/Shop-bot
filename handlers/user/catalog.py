@@ -19,13 +19,20 @@ async def process_catalog(message: Message):
 @dp.callback_query_handler(IsUser(), category_cb.filter(action='view'))
 async def category_callback_handler(query: CallbackQuery, callback_data: dict):
 
+    category_name = db.fetchone('''SELECT title FROM categories WHERE idx=?''', (callback_data['id'],))
+    
     products = db.fetchall('''SELECT * FROM products product
     WHERE product.tag = (SELECT title FROM categories WHERE idx=?) 
     AND product.idx NOT IN (SELECT idx FROM cart WHERE cid = ?)''',
                            (callback_data['id'], query.message.chat.id))
 
-    await query.answer('Alle verfügbaren Produkte.')
-    await show_products(query.message, products)
+    #await query.answer('Alle verfügbaren Produkte.')
+    #await show_products(query.message, products)
+    if category_name:
+        await show_products(query.message, products, category_name[0])
+    else:
+        await query.answer('Kategorie nicht gefunden.', show_alert=True)
+
 
 
 @dp.callback_query_handler(IsUser(), product_cb.filter(action='add'))
@@ -58,11 +65,14 @@ async def show_products(m, products):
                                  reply_markup=markup)
 
 """
-async def show_products(m, products):
+async def show_products(m, products,category_name=None):
     if not products:
         await m.answer('Hier ist nichts 😢')
     else:
         await bot.send_chat_action(m.chat.id, ChatActions.TYPING)
+        #await m.answer('Alle verfügbaren Produkte aus:')
+        message_prefix = f'Alle verfügbaren Produkte aus der Kategorie "{category_name}":' if category_name else 'Alle verfügbaren Produkte aus:'
+        await m.answer(message_prefix)
         for idx, title, _, _, _, _ in products:
             markup = InlineKeyboardMarkup().add(InlineKeyboardButton("Mehr Details", callback_data=f"detail_{idx}"))
             await m.answer(text=f'<b>{title}</b>', reply_markup=markup)
@@ -75,8 +85,13 @@ async def product_detail_callback_handler(query: CallbackQuery):
     if product:
         idx, title, body, image, price = product
         markup = product_markup(idx, price)  # Annahme, dass diese Funktion bereits existiert
-        text = f'<b>{title}</b>\n\n{body}\n\nPreis: {price}€'
-        await query.message.answer_photo(photo=image, caption=text, reply_markup=markup)
+        #text = f'<b>{title}</b>\n\n{body}\n\nPreis: {price}€'
+        text = f'<b>{title}</b>\n\n{body}'
+        
+        #await query.message.answer_photo(photo=image, caption=text, reply_markup=markup)
+        await query.message.answer_photo(photo=image, reply_markup=markup)
+        
+        await query.message.answer(text=text, reply_markup=markup)
     else:
         await query.answer('Produkt nicht gefunden.', show_alert=True)
 
