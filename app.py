@@ -11,7 +11,7 @@ filters.setup(dp)
 
 WEBAPP_HOST = "0.0.0.0"
 WEBAPP_PORT = int(os.environ.get("PORT", 5000))
-user_message = 'Starten'  # Übersetzt von 'Пользователь'
+user_message = 'Informationen'  # Übersetzt von 'Пользователь'
 admin_message = 'Admin'  # Übersetzt von 'Админ'
 catalog = '🛍️ Katalog'
 delivery_status = '🚚 Alle Produkte'
@@ -22,7 +22,7 @@ async def cmd_start(message: types.Message):
     user_first_name = message.chat.first_name  # Nutzernamen aus der Nachricht extrahieren
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
 
-    #markup.row(user_message, admin_message)
+    #markup.row(user_message, admin_message) 409300245
     markup.row(user_message)
     if message.chat.id == 409300245:
         markup.row(admin_message)
