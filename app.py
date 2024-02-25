@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import handlers
 from aiogram import executor, types
