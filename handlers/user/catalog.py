@@ -77,6 +77,7 @@ async def show_products(m, products,category_name=None):
             markup = InlineKeyboardMarkup().add(InlineKeyboardButton("Mehr Details", callback_data=f"detail_{idx}"))
             await m.answer(text=f'<b>{title}</b>', reply_markup=markup)
 
+               
 @dp.callback_query_handler(lambda c: c.data.startswith('detail_'))
 async def product_detail_callback_handler(query: CallbackQuery):
     product_id = query.data.split('_')[1]  # Extrahiert die ID aus der Callback Data
