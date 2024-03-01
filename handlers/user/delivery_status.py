@@ -13,6 +13,8 @@ from loader import dp, db, bot
 from filters import IsUser
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+#Gibt alle Produkte zurück
+
 @dp.message_handler(IsUser(), text=delivery_status)
 async def process_delivery_status(message: Message):
     

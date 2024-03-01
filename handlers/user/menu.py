@@ -4,12 +4,12 @@ from loader import dp
 from filters import IsAdmin, IsUser
 
 catalog = '🛍️ Katalog'
-balance = 'Inhaltsstoffe'
-cart = '⁠Lerne mehr über Zinzino'
+balance = '🪙 Inhaltsstoffe'
+cart = '📚 ⁠Lerne mehr über Zinzino'
 delivery_status = '🚚 Alle Produkte'
 Kundenfeedback = '📝 Kundenfeedback'
 Bluttest = '🧪 Bluttest'
-Materialien = '📦 Materialien'
+Feedback = '📦 Feedback'
 Produktvideos = '🎥 Produktvideos'
 
 
@@ -31,7 +31,16 @@ async def user_menu(message: Message):
     markup.add(catalog)
     markup.add(balance, cart)
     markup.add(Kundenfeedback, Bluttest)
-    markup.add(Materialien, Produktvideos)
+    markup.add(Feedback, Produktvideos)
     markup.add(delivery_status)
+
+    await message.answer('Menü', reply_markup=markup)
+
+
+@dp.message_handler(text=cart)
+async def user_menu(message: Message):
+#async def user_mode(message: types.Message):
+    markup = ReplyKeyboardMarkup(selective=True)
+    markup.add(balance, cart)
 
     await message.answer('Menü', reply_markup=markup)

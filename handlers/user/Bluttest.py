@@ -8,15 +8,10 @@ from aiogram.types.chat import ChatActions
 from states import CheckoutState
 from loader import dp, db, bot
 from filters import IsUser
-from .menu import cart
-from aiogram import executor, types
+from .menu import Bluttest
 
-balance = '🪙 Inhaltsstoffe'
-cart = '📚 ⁠Lerne mehr über Zinzino'
 
-@dp.message_handler(IsUser(), text=cart)
+@dp.message_handler(IsUser(), text=Bluttest)
 async def process_cart(message: Message, state: FSMContext):
 
-    await message.answer('Das sind wir')
-
-
+    await message.answer('Bluttest')

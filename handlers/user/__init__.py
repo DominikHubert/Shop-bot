@@ -5,4 +5,8 @@ from .catalog import dp
 from .delivery_status import dp
 from .sos import dp
 from .Kundenfeedback import dp
+from .Feedback import dp
+from .Bluttest import dp
+from .Produktvideos import dp
+
 __all__ = ['dp']
