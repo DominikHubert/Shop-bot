@@ -7,6 +7,7 @@ from data import config
 from loader import dp, db, bot
 import filters
 import logging
+from aiogram.types import InputFile
 
 filters.setup(dp)
 
@@ -28,6 +29,8 @@ Produktvideos = '🎥 Produktvideos'
 async def cmd_start(message: types.Message):
     user_first_name = message.chat.first_name  # Nutzernamen aus der Nachricht extrahieren
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    photo_path = 'data/assets/logo_mini.png'
+    photo = InputFile(photo_path)
 
     #markup.row(user_message, admin_message) 409300245
     markup.row(user_message)
@@ -36,6 +39,7 @@ async def cmd_start(message: types.Message):
 
     # Füge den Namen des Nutzers zur Begrüßungsnachricht hinzu
     welcome_message = f'Hallo {user_first_name}, willkommen in der Gamechanger Nation Kunden Zinzino Gruppe!'
+    await message.answer_photo(photo=photo, reply_markup=markup)
     await message.answer(welcome_message, reply_markup=markup)
 
 
