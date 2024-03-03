@@ -100,6 +100,7 @@ async def product_detail_callback_handler(query: CallbackQuery):
     markup.add("Info","Bilder", "Benefits")
     markup.add(catalog)
     await query.message.answer('Menü', reply_markup=markup)
+    '''
     if product:
         idx, title, body, image, price = product
         markup = product_markup(idx, price)  # Annahme, dass diese Funktion bereits existiert
@@ -112,6 +113,7 @@ async def product_detail_callback_handler(query: CallbackQuery):
         await query.message.answer(text=text, reply_markup=markup)
     else:
         await query.answer('Produkt nicht gefunden.', show_alert=True)
+    '''
     chat_id = query.message.chat.id
     user_product_map[chat_id] = product_id
 
@@ -133,7 +135,50 @@ async def process_infos(message: Message):
             text = f'<b>{title}</b>\n\n{body}'
         
             #await query.message.answer_photo(photo=image, caption=text, reply_markup=markup)
+        
+        
+            await message.answer(text=text, reply_markup=markup)
+    else:
+        await message.answer("Kein Produkt ausgewählt.")
+@dp.message_handler(IsUser(), text="Bilder")
+async def process_infos(message: Message):
+    chat_id = message.chat.id
+
+    # Zugriff auf die product_id aus der globalen Variable
+    if chat_id in user_product_map:
+        product_id = user_product_map[chat_id]
+        product = db.fetchone('SELECT idx, title, body, photo, price FROM products WHERE idx = ?', (product_id,))
+    
+        if product:
+            idx, title, body, image, price = product
+            markup = product_markup(idx, price)  # Annahme, dass diese Funktion bereits existiert
+            #text = f'<b>{title}</b>\n\n{body}\n\nPreis: {price}€'
+            text = f'<b>{title}</b>\n\n{body}'
+        
             await message.answer_photo(photo=image, reply_markup=markup)
+        
+        
+            #await message.answer(text=text, reply_markup=markup)
+    else:
+        await message.answer("Kein Produkt ausgewählt.")
+
+@dp.message_handler(IsUser(), text="Benefits")
+async def process_infos(message: Message):
+    chat_id = message.chat.id
+
+    # Zugriff auf die product_id aus der globalen Variable
+    if chat_id in user_product_map:
+        product_id = user_product_map[chat_id]
+        product = db.fetchone('SELECT idx, title, body, photo, price FROM products WHERE idx = ?', (product_id,))
+    
+        if product:
+            idx, title, body, image, price = product
+            markup = product_markup(idx, price)  # Annahme, dass diese Funktion bereits existiert
+            text = f'<b>{title}</b>\n\nBenefits: {price}'
+            #text = f'<b>{title}</b>\n\n{body}'
+        
+            #await message.answer_photo(photo=image, reply_markup=markup)
+        
         
             await message.answer(text=text, reply_markup=markup)
     else:
