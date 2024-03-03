@@ -15,7 +15,13 @@ WEBAPP_PORT = int(os.environ.get("PORT", 5000))
 user_message = 'Informationen'  # Übersetzt von 'Пользователь'
 admin_message = 'Admin'  # Übersetzt von 'Админ'
 catalog = '🛍️ Katalog'
+balance = '🪙 Inhaltsstoffe'
+cart = '📚 ⁠Lerne mehr über Zinzino'
 delivery_status = '🚚 Alle Produkte'
+Kundenfeedback = '📝 Kundenfeedback'
+Bluttest = '🧪 Bluttest'
+Feedback = '📦 Feedback'
+Produktvideos = '🎥 Produktvideos'
 
 
 @dp.message_handler(commands='start')
@@ -44,9 +50,10 @@ async def user_mode(message: types.Message):
     
     markup = ReplyKeyboardMarkup(selective=True)
     markup.add(catalog)
-        #markup.add(balance, cart)
+    markup.add(balance, cart)
+    markup.add(Kundenfeedback, Bluttest)
+    markup.add(Feedback, Produktvideos)
     markup.add(delivery_status)
-
     await message.answer('Wähle aus dem Menü.', reply_markup=markup)
 
 

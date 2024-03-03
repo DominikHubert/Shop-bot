@@ -1,22 +1,20 @@
-import logging
+
+from loader import dp
 from aiogram.dispatcher import FSMContext
-from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
-from keyboards.inline.products_from_cart import product_markup, product_cb
-from aiogram.utils.callback_data import CallbackData
-from keyboards.default.markups import *
-from aiogram.types.chat import ChatActions
-from states import CheckoutState
-from loader import dp, db, bot
+from aiogram.types import Message
 from filters import IsUser
 from .menu import cart
-from aiogram import executor, types
 
-balance = '🪙 Inhaltsstoffe'
-cart = '📚 ⁠Lerne mehr über Zinzino'
+from keyboards.inline.categories import product_markup, category_cb
+
+# test card ==> 1111 1111 1111 1026, 12/22, CVC 000
+
+# shopId 506751
+
+# shopArticleId 538350
+
 
 @dp.message_handler(IsUser(), text=cart)
-async def process_cart(message: Message, state: FSMContext):
-
-    await message.answer('Das sind wir')
-
-
+async def process_balance(message: Message, state: FSMContext):
+    await message.answer('⁠Lerne mehr über Zinzino')
+    

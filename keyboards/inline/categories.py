@@ -1,4 +1,5 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message, CallbackQuery
 from aiogram.utils.callback_data import CallbackData
 from loader import db
 
@@ -12,5 +13,7 @@ def categories_markup():
     markup = InlineKeyboardMarkup()
     for idx, title in db.fetchall('SELECT * FROM categories'):
         markup.add(InlineKeyboardButton(title, callback_data=category_cb.new(id=idx, action='view')))
-
+    
     return markup
+
+

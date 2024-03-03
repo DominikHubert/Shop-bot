@@ -1,5 +1,8 @@
 
+from aiogram import executor, types
+from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup
+from handlers.user.states import OrderState
 from loader import dp
 from filters import IsAdmin, IsUser
 
@@ -16,6 +19,7 @@ Produktvideos = '🎥 Produktvideos'
 settings = '⚙️ Katalogeinstellungen'
 orders = '🚚 Bestellungen'
 questions = '❓ Fragen'
+
 
 @dp.message_handler(IsAdmin(), commands='menu')
 async def admin_menu(message: Message):
@@ -37,10 +41,7 @@ async def user_menu(message: Message):
     await message.answer('Menü', reply_markup=markup)
 
 
-@dp.message_handler(text=cart)
-async def user_menu(message: Message):
-#async def user_mode(message: types.Message):
-    markup = ReplyKeyboardMarkup(selective=True)
-    markup.add(balance, cart)
 
-    await message.answer('Menü', reply_markup=markup)
+    
+
+

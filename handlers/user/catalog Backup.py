@@ -5,28 +5,20 @@ from keyboards.inline.products_from_catalog import product_markup, product_cb
 from aiogram.utils.callback_data import CallbackData
 from aiogram.types.chat import ChatActions
 from loader import dp, db, bot
-from .menu import catalog, user_menu
+from .menu import catalog
 from filters import IsUser
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
-from .menu import cart, Kundenfeedback, Bluttest, Feedback, Produktvideos, delivery_status
+from .menu import cart
 from .menu import balance
 
 
-user_product_map = {}
+
 
 @dp.message_handler(IsUser(), text=catalog)
 async def process_catalog(message: Message):
     await message.answer('Wählen Sie eine Kategorie, um die Produktliste anzuzeigen:',
                          reply_markup=categories_markup())
-    markup = ReplyKeyboardMarkup(selective=True)
-    markup.add(catalog)
-    markup.add(balance, cart)
-    markup.add(Kundenfeedback, Bluttest)
-    markup.add(Feedback, Produktvideos)
-    markup.add(delivery_status)
-
-    await message.answer('Wähle', reply_markup=markup)
 
 
 @dp.callback_query_handler(IsUser(), category_cb.filter(action='view'))
@@ -90,15 +82,15 @@ async def show_products(m, products,category_name=None):
             markup = InlineKeyboardMarkup().add(InlineKeyboardButton("Mehr Details", callback_data=f"detail_{idx}"))
             await m.answer(text=f'<b>{title}</b>', reply_markup=markup)
 
-        
+               
 @dp.callback_query_handler(lambda c: c.data.startswith('detail_'))
 async def product_detail_callback_handler(query: CallbackQuery):
     product_id = query.data.split('_')[1]  # Extrahiert die ID aus der Callback Data
     product = db.fetchone('SELECT idx, title, body, photo, price FROM products WHERE idx = ?', (product_id,))
     
     markup = ReplyKeyboardMarkup(selective=True)
-    markup.add("Info","Bilder", "Benefits")
-    markup.add(catalog)
+    markup.add(balance)
+    markup.add(cart)
     await query.message.answer('Menü', reply_markup=markup)
     if product:
         idx, title, body, image, price = product
@@ -112,29 +104,10 @@ async def product_detail_callback_handler(query: CallbackQuery):
         await query.message.answer(text=text, reply_markup=markup)
     else:
         await query.answer('Produkt nicht gefunden.', show_alert=True)
-    chat_id = query.message.chat.id
-    user_product_map[chat_id] = product_id
-
 
     
 @dp.message_handler(IsUser(), text="Info")
 async def process_infos(message: Message):
-    chat_id = message.chat.id
-
-    # Zugriff auf die product_id aus der globalen Variable
-    if chat_id in user_product_map:
-        product_id = user_product_map[chat_id]
-        product = db.fetchone('SELECT idx, title, body, photo, price FROM products WHERE idx = ?', (product_id,))
     
-        if product:
-            idx, title, body, image, price = product
-            markup = product_markup(idx, price)  # Annahme, dass diese Funktion bereits existiert
-            #text = f'<b>{title}</b>\n\n{body}\n\nPreis: {price}€'
-            text = f'<b>{title}</b>\n\n{body}'
-        
-            #await query.message.answer_photo(photo=image, caption=text, reply_markup=markup)
-            await message.answer_photo(photo=image, reply_markup=markup)
-        
-            await message.answer(text=text, reply_markup=markup)
-    else:
-        await message.answer("Kein Produkt ausgewählt.")
+    await message.answer('Wählen Sie eine Kategorie, um die Produktliste anzuzeigen:',
+                         reply_markup=categories_markup())
