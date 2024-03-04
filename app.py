@@ -29,7 +29,7 @@ Produktvideos = '🎥 Produktvideos'
 async def cmd_start(message: types.Message):
     user_first_name = message.chat.first_name  # Nutzernamen aus der Nachricht extrahieren
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
-    photo_path = 'data/assets/logo_mini.png'
+    photo_path = 'data/assets/Gamechanger.png'
     photo = InputFile(photo_path)
 
     #markup.row(user_message, admin_message) 409300245
@@ -38,7 +38,7 @@ async def cmd_start(message: types.Message):
         markup.row(admin_message)
 
     # Füge den Namen des Nutzers zur Begrüßungsnachricht hinzu
-    welcome_message = f'Hallo {user_first_name}, willkommen in der Gamechanger Nation Kunden Zinzino Gruppe!'
+    welcome_message = f'Hallo {user_first_name}, \n 📢 Dieser Bot enthält detaillierte Informationen über Zinzino Produkte und Bluttests.\n 💡Hier bekommst du auch Informationen über die Inhaltsstoffe und wie du deine Gesundheit unterstützen kannst. \n ✅ Die Informationen werden ständig aktualisiert und ergänzt.'
     await message.answer_photo(photo=photo, reply_markup=markup)
     await message.answer(welcome_message, reply_markup=markup)
 
