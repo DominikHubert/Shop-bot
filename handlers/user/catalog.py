@@ -1,3 +1,4 @@
+import io
 import logging
 from aiogram.types import Message, CallbackQuery
 from keyboards.inline.categories import categories_markup, category_cb
@@ -148,6 +149,7 @@ async def process_infos(message: Message):
     if chat_id in user_product_map:
         product_id = user_product_map[chat_id]
         product = db.fetchone('SELECT idx, title, body, photo, price FROM products WHERE idx = ?', (product_id,))
+
     
         if product:
             idx, title, body, image, price = product
@@ -155,9 +157,16 @@ async def process_infos(message: Message):
             #text = f'<b>{title}</b>\n\n{body}\n\nPreis: {price}€'
             text = f'<b>{title}</b>\n\n{body}'
         
-            await message.answer_photo(photo=image, reply_markup=markup)
-        
-        
+            #await message.answer_photo(photo=image, reply_markup=markup)
+
+            if title == 'Zinzino LeanShake':
+                images = db.fetchall('SELECT photo FROM products WHERE title = ?', (title,))
+                for image_data in images:
+                    photo_bytes = image_data[0]  # Angenommen, image_data[0] enthält die binären Bilddaten
+                    if photo_bytes:
+                        await message.answer_photo(photo=io.BytesIO(photo_bytes))
+            else:
+                await message.answer_photo(photo=image, reply_markup=markup)
             #await message.answer(text=text, reply_markup=markup)
     else:
         await message.answer("Kein Produkt ausgewählt.")
