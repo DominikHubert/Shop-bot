@@ -21,7 +21,7 @@ cart = '📚 ⁠Lerne mehr über Zinzino'
 delivery_status = '🚚 Alle Produkte'
 Kundenfeedback = '📝 Kundenfeedback'
 Bluttest = '🧪 Bluttest'
-Feedback = '📦 Feedback'
+Feedback = '📦 Reflexionsbogen'
 Produktvideos = '🎥 Produktvideos'
 
 
@@ -54,10 +54,12 @@ async def user_mode(message: types.Message):
     
     markup = ReplyKeyboardMarkup(selective=True)
     markup.add(catalog)
-    markup.add(balance, cart)
+    #markup.add(balance, cart)
+    markup.add(delivery_status, cart)
+    
     markup.add(Kundenfeedback, Bluttest)
     markup.add(Feedback, Produktvideos)
-    markup.add(delivery_status)
+    #markup.add(delivery_status)
     await message.answer('Wähle aus dem Menü.', reply_markup=markup)
 
 

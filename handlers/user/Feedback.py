@@ -19,7 +19,7 @@ async def process_cart(message: Message, state: FSMContext):
 
     if len(cart_data) == 0:
 
-        await message.answer('Feedback')
+        await message.answer('https://static.funnelcockpit.com/upload/pckRnEGXZEcu9mT6n/4a2994f1a7267694c01e430013e297e9.pdf')
 
     else:
 

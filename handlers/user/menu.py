@@ -12,7 +12,7 @@ cart = '📚 ⁠Lerne mehr über Zinzino'
 delivery_status = '🚚 Alle Produkte'
 Kundenfeedback = '📝 Kundenfeedback'
 Bluttest = '🧪 Bluttest'
-Feedback = '📦 Feedback'
+Feedback = '📦 Reflexionsbogen'
 Produktvideos = '🎥 Produktvideos'
 
 
@@ -32,11 +32,15 @@ async def admin_menu(message: Message):
 @dp.message_handler(IsUser(), commands='menu')
 async def user_menu(message: Message):
     markup = ReplyKeyboardMarkup(selective=True)
+    
+
     markup.add(catalog)
-    markup.add(balance, cart)
+    #markup.add(balance, cart)
+    markup.add(delivery_status, cart)
+    
     markup.add(Kundenfeedback, Bluttest)
     markup.add(Feedback, Produktvideos)
-    markup.add(delivery_status)
+    #markup.add(delivery_status)
 
     await message.answer('Menü', reply_markup=markup)
 

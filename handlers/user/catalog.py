@@ -22,10 +22,12 @@ async def process_catalog(message: Message):
                          reply_markup=categories_markup())
     markup = ReplyKeyboardMarkup(selective=True)
     markup.add(catalog)
-    markup.add(balance, cart)
+    #markup.add(balance, cart)
+    markup.add(delivery_status, cart)
+    
     markup.add(Kundenfeedback, Bluttest)
     markup.add(Feedback, Produktvideos)
-    markup.add(delivery_status)
+    #markup.add(delivery_status)
 
     await message.answer('Wähle', reply_markup=markup)
 
@@ -45,7 +47,7 @@ async def category_callback_handler(query: CallbackQuery, callback_data: dict):
     if category_name:
         await show_products(query.message, products, category_name[0])
     else:
-        await query.answer('Kategorie nicht gefunden.', show_alert=True)
+        await query.answer('Kategorie nicht vorhanden.', show_alert=True)
 
 
 
