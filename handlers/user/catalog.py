@@ -27,7 +27,7 @@ async def process_catalog(message: Message):
     
     markup.add(Kundenfeedback, Bluttest)
     markup.add(Feedback, Produktvideos)
-    #markup.add(delivery_status)
+    markup.add(balance)
 
     await message.answer('Wähle', reply_markup=markup)
 

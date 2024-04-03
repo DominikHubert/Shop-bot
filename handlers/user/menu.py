@@ -7,7 +7,7 @@ from loader import dp
 from filters import IsAdmin, IsUser
 
 catalog = '🛍️ Katalog'
-balance = '🪙 Inhaltsstoffe'
+balance = '🪙 Allgemeine Informationen über Omega3 & Krankheiten'
 cart = '📚 ⁠Lerne mehr über Zinzino'
 delivery_status = '🚚 Alle Produkte'
 Kundenfeedback = '📝 Kundenfeedback'
@@ -40,7 +40,7 @@ async def user_menu(message: Message):
     
     markup.add(Kundenfeedback, Bluttest)
     markup.add(Feedback, Produktvideos)
-    #markup.add(delivery_status)
+    markup.add(balance)
 
     await message.answer('Menü', reply_markup=markup)
 

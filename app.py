@@ -13,10 +13,10 @@ filters.setup(dp)
 
 WEBAPP_HOST = "0.0.0.0"
 WEBAPP_PORT = int(os.environ.get("PORT", 5000))
-user_message = 'Informationen'  # Übersetzt von 'Пользователь'
+user_message = 'Klicke hier, um zu beginnen'  # Übersetzt von 'Пользователь'
 admin_message = 'Admin'  # Übersetzt von 'Админ'
 catalog = '🛍️ Katalog'
-balance = '🪙 Inhaltsstoffe'
+balance = '🪙 Allgemeine Informationen über Omega3 & Krankheiten'
 cart = '📚 ⁠Lerne mehr über Zinzino'
 delivery_status = '🚚 Alle Produkte'
 Kundenfeedback = '📝 Kundenfeedback'
@@ -59,7 +59,7 @@ async def user_mode(message: types.Message):
     
     markup.add(Kundenfeedback, Bluttest)
     markup.add(Feedback, Produktvideos)
-    #markup.add(delivery_status)
+    markup.add(balance)
     await message.answer('Wähle aus dem Menü.', reply_markup=markup)
 
 
