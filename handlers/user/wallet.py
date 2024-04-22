@@ -72,4 +72,3 @@ o	Wood, L. G., Garg, M. L., & Gibson, P. G. (2015). A high-fat challenge increas
 '''
     await message.answer(smessage)
     await message.answer(smessage2)
-    await message.answer(smessage3)

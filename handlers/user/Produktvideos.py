@@ -24,5 +24,12 @@ async def process_balance(message: Message, state: FSMContext):
                  f'Health Protocol Concept: https://www.zinzino.tv/videos/ac9fdeb01b1ee7c525/health-protocol-concept-de\n\n' \
                  f'How to take the Vitamin D Test: https://www.zinzino.tv/videos/119eddb01616e8c498/zinzino-vitamind-test-instructional-video-tt_dede-mp4\n\n' \
                  f'Zinzino HbA1c Test & Lifestyle Assessment: https://www.zinzino.tv/videos/799ed4b4101fe2c4f0/zinzino-hba1c-test-lifestyle-assessment-de'
+    produkt_videos_de = f'Links zu den Produktvideos : (du kannst sie hier herunterladen) \n\n' \
+                 f'BalanceOil Vegan: https://www.zinzino.tv/videos/4c9ad1b91617e3c3c4/balanceoil-vegan-de\n\n' \
+                 f'Wie man den BalanceTest durchführt: https://www.zinzino.tv/videos/d39eddb01610e0c05a/how-to-take-the-balancetest-de\n\n' \
+                 f'LeanShake with Dr. Paul Clayton: https://www.zinzino.tv/videos/d49adabe101ae3c25c/leanshake-with-dr-paul-clayton-de\n\n' \
+                 f'Health Protocol Concept: https://www.zinzino.tv/videos/ac9fdeb01b1ee7c525/health-protocol-concept-de\n\n' \
+                 f'How to take the Vitamin D Test: https://www.zinzino.tv/videos/119eddb01616e8c498/zinzino-vitamind-test-instructional-video-tt_dede-mp4\n\n' \
+                 f'Zinzino HbA1c Test & Lifestyle Assessment: https://www.zinzino.tv/videos/799ed4b4101fe2c4f0/zinzino-hba1c-test-lifestyle-assessment-de'
     
-    await message.answer(produkt_videos)
+    await message.answer(produkt_videos_de)
