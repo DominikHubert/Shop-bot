@@ -8,5 +8,6 @@ from .Kundenfeedback import dp
 from .Feedback import dp
 from .Bluttest import dp
 from .Produktvideos import dp
+from .info import dp
 
 __all__ = ['dp']

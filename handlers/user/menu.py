@@ -14,6 +14,7 @@ Kundenfeedback = '📝 Kundenfeedback'
 Bluttest = '🧪 Bluttest'
 Feedback = '📦 Reflexionsbogen'
 Produktvideos = '🎥 Produktvideos'
+info = '📞 Kundenservice'
 
 
 settings = '⚙️ Katalogeinstellungen'

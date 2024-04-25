@@ -23,6 +23,7 @@ Kundenfeedback = '📝 Kundenfeedback'
 Bluttest = '🧪 Bluttest'
 Feedback = '📦 Reflexionsbogen'
 Produktvideos = '🎥 Produktvideos'
+info = '📞 Kundenservice'
 
 
 @dp.message_handler(commands='start')
@@ -59,7 +60,7 @@ async def user_mode(message: types.Message):
     
     markup.add(Kundenfeedback, Bluttest)
     markup.add(Feedback, Produktvideos)
-    markup.add(balance)
+    markup.add(balance, info)
     await message.answer('Wähle aus dem Menü.', reply_markup=markup)
 
 
