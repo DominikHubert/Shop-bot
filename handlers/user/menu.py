@@ -13,7 +13,7 @@ delivery_status = '🚚 Alle Produkte'
 Kundenfeedback = '📝 Kundenfeedback'
 Bluttest = '🧪 Bluttest'
 Feedback = '📦 Reflexionsbogen'
-Produktvideos = '🎥 Produktvideos'
+Produktvideos = '🎥 Produktvideos & Vorträge'
 info = '📞 Kundenservice'
 
 

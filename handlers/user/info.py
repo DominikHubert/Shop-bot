@@ -17,8 +17,17 @@ from keyboards.inline.categories import product_markup, category_cb
 @dp.message_handler(IsUser(), text=info)
 async def process_balance(message: Message, state: FSMContext):
     text= f'Anrufen oder E-Mail schreiben\n' \
+    f'Österreich\n'\
         f'+43 7 205 698 06\n' \
 f'customer.at@zinzino.com\n' \
+f'Öffnungszeiten 09-17 CET Mo bis Fr\n\n' \
+f'Deutschland\n'\
+        f'+49 8000007850\n' \
+f'customer.de@zinzino.com\n' \
+f'Öffnungszeiten 09-17 CET Mo bis Fr\n\n' \
+f'Schweiz\n'\
+        f'+41 435020134\n' \
+f'customer.ch@zinzino.com\n' \
 f'Öffnungszeiten 09-17 CET Mo bis Fr\n\n' \
 f'Besucht unsere Webseite https://www.zinzino.com/site/at/de-de/uber-uns/kundenservice/'
     await message.answer(text)
