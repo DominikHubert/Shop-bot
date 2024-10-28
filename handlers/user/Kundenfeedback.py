@@ -1,4 +1,4 @@
-import logging
+import logging, re
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards.inline.products_from_cart import product_markup, product_cb
@@ -58,7 +58,9 @@ async def handle_category_action(query: CallbackQuery, callback_data: dict):
     if product:
             question, category = product
             markup = product_markup(category, question)  # Annahme, dass diese Funktion bereits existiert
-            text = f'<b>{category}</b>\n{question}'
+            #text = f'<b>{category}</b>\n{question}'
+            text = f'{question}\n'
+            
             if category != '':
                 images = db.fetchall('SELECT question FROM questions WHERE category = ?', (category,))
                 heading = f'<b>{category}</b>\n'
@@ -67,11 +69,15 @@ async def handle_category_action(query: CallbackQuery, callback_data: dict):
                     photo_bytes = image_data[0]  # Angenommen, image_data[0] enthält die binären Bilddaten
                     if photo_bytes:
                         if len(photo_bytes) > 1280:
-                        # Nachricht in Teile von je maximal 1280 Zeichen teilen und einzeln senden
+                            # Nachricht in Teile von je maximal 1276 Zeichen teilen und einzeln senden
                             parts = [photo_bytes[i:i+1280] for i in range(0, len(photo_bytes), 1280)]
                             for part in parts:
-                                await query.message.answer(text=part)
+                                # Text zwischen - und : finden und fett formatieren
+                                formatted_part = re.sub(r'-(.*?)-:', r'<b>\1</b>:', part)
+                                await query.message.answer(text=formatted_part, parse_mode='HTML')
+
                         #await query.message.answer(text=photo_bytes)
-            else:
-                await query.message.answer(text=text)
+                        else:
+                            await query.message.answer(text=text)
+                            
     await query.answer()  # Schließt die CallbackQuery-Interaktion ab
