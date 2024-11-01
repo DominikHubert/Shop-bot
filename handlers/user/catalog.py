@@ -185,7 +185,8 @@ async def process_infos(message: Message):
         if product:
             idx, title, body, image, price = product
             markup = product_markup(idx, price)  # Annahme, dass diese Funktion bereits existiert
-            text = f'<b>{title}</b>\n\nBenefits: {price}'
+            #text = f'<b>{title}</b>\n\nBenefits: {price}'
+            text = f'<b>{title}</b>\n\n{price}'
             #text = f'<b>{title}</b>\n\n{body}'
         
             #await message.answer_photo(photo=image, reply_markup=markup)
